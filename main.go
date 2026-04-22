@@ -5,6 +5,8 @@ import (
 	"os"
 
 	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
+	table "charm.land/lipgloss/v2/table"
 )
 
 func main() {
@@ -37,6 +39,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() tea.View {
-	content := "text: " + m.text + " keystroke: " + m.keystroke + " string: " + m.string
-	return tea.NewView(content)
+	rows := [][]string{
+		{"text", m.text},
+		{"keystroke", m.keystroke},
+		{"string", m.string},
+	}
+	table := table.New().Border(lipgloss.RoundedBorder()).Rows(rows...).Headers("field", "result")
+	return tea.NewView(table.Render())
 }
