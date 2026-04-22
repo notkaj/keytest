@@ -44,6 +44,15 @@ func (m model) View() tea.View {
 		{"keystroke", m.keystroke},
 		{"string", m.string},
 	}
-	table := table.New().Border(lipgloss.RoundedBorder()).Rows(rows...).Headers("field", "result")
-	return tea.NewView(table.Render())
+	table := table.New().
+		Border(lipgloss.RoundedBorder()).
+		Rows(rows...).
+		Headers("field", "result")
+	footer := lipgloss.
+		NewStyle().
+		Foreground(lipgloss.Color("#626262")).
+		Italic(true).
+		Render("there is no button to exit, \nyou'll have to close the terminal or kill the process")
+	content := lipgloss.JoinVertical(lipgloss.Top, table.Render(), footer)
+	return tea.NewView(content)
 }
